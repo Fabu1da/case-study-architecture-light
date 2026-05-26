@@ -143,8 +143,7 @@ Your submission will be evaluated based on:
 1. Complete implementation of all required features
 2. Unit tests for services (minimum 80% coverage)
 3. Integration tests for API endpoints
-4. Brief documentation of your design decisions (add to this README or create DESIGN.md)
-
+4. Brief documentation of your design decisions in TASK.md
 ---
 
 ## 📚 Helpful Resources
