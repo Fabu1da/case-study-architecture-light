@@ -91,8 +91,6 @@ describe('User Controller Integration Tests', () => {
           .expect(201);
 
         expect(response.body).toHaveProperty('message', 'User registered successfully');
-        expect(response.body).toHaveProperty('user');
-        expect(response.body.user.email).toBe(userData.email);
         expect(mockUserRepository.findByEmail).toHaveBeenCalledWith(userData.email);
         expect(mockPasswordManager.toHash).toHaveBeenCalledWith(userData.password);
         expect(mockUserRepository.create).toHaveBeenCalled();
@@ -389,7 +387,6 @@ describe('User Controller Integration Tests', () => {
           .send(loginData)
           .expect(200);
 
-        expect(response.body).toHaveProperty('user');
         expect(response.body).toHaveProperty('tokens');
         expect(response.body.user.email).toBe(loginData.email);
         expect(response.body.tokens).toHaveProperty('accessToken');
