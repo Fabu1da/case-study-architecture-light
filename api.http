@@ -1,0 +1,24 @@
+###
+POST http://localhost:9000/partner-app/api/users/register
+Content-Type: application/json
+
+{
+  "firstName": "Test",
+  "lastName": "User",
+  "email": "testuser2@example.com",
+  "password": "Password1.",
+  "confirmPassword": "Password1."
+}
+
+###
+POST http://localhost:9000/partner-app/api/users/login
+Content-Type: application/json
+
+{
+  "email": "testuser2@example.com",
+  "password": "Password1."
+}
+
+
+###
+GET http://localhost:9000/partner-app/api/health-check/

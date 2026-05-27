@@ -1,9 +1,11 @@
 import { json } from 'body-parser';
-import helmet from 'helmet';
-import cors from 'cors';
+
 
 import 'reflect-metadata';
 import dotenv from 'dotenv';
+
+import helmet from 'helmet';
+import cors from 'cors';
 import { InversifyExpressServer } from 'inversify-express-utils';
 
 // import { createKafkaClient, Producer, Consumer } from '@marta/eventbus/dist';

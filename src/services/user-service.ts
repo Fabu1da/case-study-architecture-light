@@ -14,6 +14,8 @@ export interface UserService {
     getUserByEmail(email: string): Promise<User | null>;
     loginUser(email: string, password: string): Promise<LoginResponse>;
 }
+
+
     @injectable()
 export class UserServiceImpl implements UserService {
 
@@ -22,7 +24,7 @@ export class UserServiceImpl implements UserService {
         @inject(TYPES.PasswordManagerService) private passwordManager: PasswordManagerService
     ) {}
 
-    async registerUser(user: User & { confirmPassword: string }): Promise<SafeUser> {
+    async registerUser(user: User & { confirmPassword: string }): Promise<User> {
         const existingUser = await this.userRepository.findByEmail(user.email);
         if (existingUser) {
             throw new Error("User with this email already exists");
@@ -50,6 +52,7 @@ export class UserServiceImpl implements UserService {
 
     async loginUser(email: string, password: string): Promise<LoginResponse> {
        
+
         const loggedInUser = await this.getUserByEmail(email);
         
         if (!loggedInUser) {
@@ -127,5 +130,6 @@ export class UserServiceImpl implements UserService {
         return /[!@#$%^&*(),.?":{}|<>]/.test(password);
     }
 
+    
 }
 
