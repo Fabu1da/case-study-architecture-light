@@ -3,7 +3,7 @@
 # JWT Token Generation
 
 - AccessToken: includes the subject (id) to whom the token belongs to and other useful information such as email
-- RefreshToken: includes only the subject (id)
+- RefreshToken: includes only the subject (id) — only used to issue a new AccessToken once it expires.
 
 There is no golden rule, it can be customized and can hold more data about the user the token belongs to.
 Two separate secrets are used for access and refresh tokens so they cannot be swapped for each other.
