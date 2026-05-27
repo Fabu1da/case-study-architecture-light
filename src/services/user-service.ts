@@ -10,7 +10,7 @@ import { LoginResponse, SafeUser} from "../types/user";
 
 
 export interface UserService {
-    registerUser(user: User & { confirmPassword: string } ): Promise<SafeUser>;
+    registerUser(user: Omit<User, 'id'> & { confirmPassword: string } ): Promise<User>;
     getUserByEmail(email: string): Promise<User | null>;
     loginUser(email: string, password: string): Promise<LoginResponse>;
 }
@@ -24,7 +24,7 @@ export class UserServiceImpl implements UserService {
         @inject(TYPES.PasswordManagerService) private passwordManager: PasswordManagerService
     ) {}
 
-    async registerUser(user: User & { confirmPassword: string }): Promise<User> {
+    async registerUser(user: Omit<User, 'id'> & { confirmPassword: string }): Promise<User> {
         const existingUser = await this.userRepository.findByEmail(user.email);
         if (existingUser) {
             throw new Error("User with this email already exists");

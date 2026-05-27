@@ -4,6 +4,7 @@ import { controller, httpPost } from "inversify-express-utils";
 import { inject } from "inversify";
 import { UserService } from "../services";
 import { BaseController, TYPES } from "../lib";
+import { User } from "entities/user";
 @controller('/users')
 export class UserController extends BaseController {
     constructor(@inject(TYPES.UserService) private userService: UserService) {
@@ -19,10 +20,18 @@ export class UserController extends BaseController {
                 res.status(400).json({ error: "All fields are required" });
                 return;
             }
+
+            const userToRegister: Omit<User, 'id'> & { confirmPassword: string } = {
+                firstName,
+                lastName,
+                email,
+                password: userPassword,
+                confirmPassword
+            };
             
-            const user = await this.userService.registerUser(req.body);
+            await this.userService.registerUser(userToRegister);
            
-            res.status(201).json({ message: "User registered successfully", user });
+            res.status(201).json({ message: "User registered successfully" });
         
         } catch (error: any) {
             res.status(400).json({ error: error.message });
