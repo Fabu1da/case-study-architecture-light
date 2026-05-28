@@ -1,3 +1,3 @@
-// export const exampleEventHandler = event => {
-//     console.log('Event consumed - ', event);
-// };
+ export const exampleEventHandler = event => {
+     console.log('Event consumed - ', event);
+ };

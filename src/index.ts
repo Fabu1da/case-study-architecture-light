@@ -1,15 +1,20 @@
 import { json } from 'body-parser';
 
+
 import 'reflect-metadata';
 import dotenv from 'dotenv';
+
+import helmet from 'helmet';
+import cors from 'cors';
 import { InversifyExpressServer } from 'inversify-express-utils';
 
 // import { createKafkaClient, Producer, Consumer } from '@marta/eventbus/dist';
 
-// import { getDataSource } from './typeormconfig';
+import { getDataSource } from './typeormconfig';
 
 import { diContainer } from '../inversify.config';
-// import { TYPES } from './lib';
+import { TYPES } from './lib';
+
 // import { exampleEventHandler } from './events/handlers';
 
 dotenv.config();
@@ -30,9 +35,9 @@ dotenv.config();
         // diContainer.bind(TYPES.producer).toConstantValue(producer);
 
         // DB setup
-        // const dataSource = await getDataSource();
-        // await dataSource.initialize();
-        // diContainer.bind(TYPES.DB).toConstantValue(dataSource);
+        const dataSource = await getDataSource();
+        await dataSource.initialize();
+        diContainer.bind(TYPES.DB).toConstantValue(dataSource);
 
         // Create app server
         const app = new InversifyExpressServer(diContainer, null, {
@@ -40,6 +45,10 @@ dotenv.config();
         });
         app.setConfig(app => {
             app.use(json());
+
+            // security purposes
+            app.use(helmet());
+            app.use(cors());
         });
 
         const server = app.build();
@@ -51,5 +60,6 @@ dotenv.config();
         });
     } catch (err) {
         console.error(err);
+        process.exit(1);
     }
 })();
